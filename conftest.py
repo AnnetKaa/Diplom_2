@@ -2,6 +2,7 @@ import requests
 from faker import Faker
 import pytest
 fake = Faker()
+import dataset
 
 @pytest.fixture
 def login_user():
@@ -11,10 +12,10 @@ def login_user():
         "name": fake.name()
     }
     yield data
-    login_url = "https://stellarburgers.nomoreparties.site/api/auth/login"
+    login_url = dataset.Data.login_url
     login_data = {
         "email": data['email'],
         "password": data['password']
     }
-    delete_url = f"https://stellarburgers.nomoreparties.site/api/auth/user"
+    delete_url = dataset.Data.put_url
     requests.delete(delete_url)
